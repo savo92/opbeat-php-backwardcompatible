@@ -10,7 +10,6 @@ _Really thanks to [Mads Jensen](https://github.com/madsleejensen) for his [Opbea
 _So I publish this client to everyone (if you have questions, see the disclaimer at the end of the README and then open an issue - thanks)_
 <br/>
 <br/>
-<br/>
 ## Requirements
 This client requires only cURL (libcurl for PHP)
 
@@ -31,6 +30,7 @@ There are some advanced stuff you can use:
 ### Disable the hooks' automatic setup
 If you want to declare custom set\_error\_handler or register\_shutdown\_function, you must not include the opbeat.php (basically, it's 
 an "autoloader file").  
+
 1. After the clone, define the constants as above
 2. Include Opbeat/init.php
 3. Invoke OpbeatInitializer::load with the first parameter as FALSE (boolean) - it will check dependencies and settings
@@ -49,6 +49,8 @@ other developers that don't use PHP \>= 5.6. I hope you enjoy my work and contri
 This client is provided to you with the MIT license, so you can use it as you prefer.
 Maybe I will update this client if any error/incompatibility occurs.
 REALLY IMPORTANT: THIS CLIENT DOESN'T USE COMPOSER NOR NAMESPACES.  
+
 *IF YOU WANT A BETTER VERSION WITH NAMESPACES OR OTHER INTERESTING THINGS, PLEASE CONSIDER TO FORK IT.*  
+
 *MAYBE, IN THE FUTURE, OPBEAT WILL RELEASE A OFFICIAL CLIENT - SO THIS PROJECT WILL BECOME USELESS (SURE, IF THEY'LL SUPPORT PHP \<= 5.5). 
 THIS IS ANOTHER REASON THAT STOPS ME TO IMPROVE THIS PROJECT. *

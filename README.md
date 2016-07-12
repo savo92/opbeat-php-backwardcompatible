@@ -1,6 +1,7 @@
 Opbeat-php-backwardcompatible
 =================
 
+## !!!!!!!!!!!!! WIP !!!!!!!!!!!!! 
 ## Still in development, please don't use 
 
 > Simple PHP Client for Opbeat. It provides a simple integration that works with any PHP5 versions

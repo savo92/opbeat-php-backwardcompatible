@@ -1,6 +1,7 @@
 <?php
     require_once dirname(__FILE__) . '/utils.php';
     require_once dirname(__FILE__) . '/client.php';
+    require_once dirname(__FILE__) . '/trace.php';
 
     /**
      * Class OpbeatInitializer
@@ -79,33 +80,8 @@
          * @param $errLine
          */
         public static function sendStandardPhpError($errNo, $errStr, $errFile, $errLine) {
-            $trace = debug_backtrace();
-            $cleanedTrace = array();
-            foreach ($trace as $frame) {
-                if ($frame['line']===null) continue; //@TODO improve control
-                array_push($cleanedTrace, array(
-                    'filename' => $frame['file'],
-                    'lineno' => $frame['line'],
-                    'function' => $frame['function']
-                ));
-            }
-            switch ($errNo) {
-                case E_WARNING:
-                case E_COMPILE_WARNING:
-                case E_CORE_WARNING:
-                case E_USER_WARNING:
-                    $level = 'warning';
-                    break;
-                case E_ERROR:
-                case E_USER_ERROR:
-                    $level = 'error';
-                    break;
-                case E_PARSE:
-                case E_CORE_ERROR:
-                case E_COMPILE_ERROR:
-                default:
-                    $level = 'fatal';
-            }
+            $cleanedTrace = TraceGenerator::getTrace();
+            $level = OpbeatClient::getErrorLevel($errNo);
             OpbeatClient::internalSendError($errStr, $level, $cleanedTrace);
         }
 
@@ -125,7 +101,8 @@
          */
         public static function sendException($e) {
             //@TODO
-            throw new Exception('Not implemented yet');
+            $level = OpbeatClient::getErrorLevel($e->getCode());    //@fixme getCode will return different codes
+            OpbeatClient::internalSendError($e->getMessage, $level, TraceGenerator::getTraceByException($e));
         }
 
     }

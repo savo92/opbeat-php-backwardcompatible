@@ -1,4 +1,4 @@
-Opbeat-php-legacy
+Opbeat-php-backwardcompatible
 =================
 
 > Simple PHP Client for Opbeat. It provides a simple integration that works with any PHP5 versions

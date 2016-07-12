@@ -17,7 +17,7 @@ This client requires only cURL (libcurl for PHP)
 ## Installation
 1. Clone this repository wherever you prefer (it doesn't use Composer nor namespace)
 2. Define constants for Opbeat settings (Organization ID, App ID, Secret Token):
-```OPBEAT_ORGANIZATION_ID```   
+```OPBEAT_ORGANIZATION_ID```  
 ```OPBEAT_APP_ID```  
 ```OPBEAT_SECRET_TOKEN```  
 3. Include opbeat.php and you have done

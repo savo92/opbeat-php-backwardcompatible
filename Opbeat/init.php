@@ -13,7 +13,7 @@
 
         /**
          * @param bool|TRUE $willRegisterHooks define if registers set_error_handler and register_shutdown_function or not
-         * @param null $hookCallback the callable that will be executed at the end of the hook (obviously, if $willRegisterHooks is true)
+         * @param null|callable $hookCallback the callable that will be executed at the end of the hook (if $willRegisterHooks is true)
          */
         public static function load($willRegisterHooks=true, $hookCallback=null) {
             SystemControl::check();
@@ -23,7 +23,7 @@
         }
 
         /**
-         * @param null $hookCallback the callable that will be executed at the end of the hook
+         * @param null|callable $hookCallback the callable that will be executed at the end of the hook
          */
         private static function registerHooks ($hookCallback=null) {
             if ($hookCallback!==null && is_callable($hookCallback)!==false) {
@@ -37,10 +37,10 @@
         /**
          * The standard set_error_handler callable
          *
-         * @param $errNo
-         * @param $errStr
-         * @param $errFile
-         * @param $errLine
+         * @param $errNo string
+         * @param $errStr int
+         * @param $errFile string
+         * @param $errLine int
          */
         public static function errorHandler($errNo, $errStr, $errFile, $errLine) {
             $php_not_logged_error_codes = array(
@@ -58,7 +58,7 @@
         }
 
         /**
-         * THe standard register_shutdown_function callable
+         * The standard register_shutdown_function callable
          */
         public static function shutdownHandler() {
             $error = error_get_last();
@@ -74,35 +74,45 @@
         }
 
         /**
-         * @param $errNo
-         * @param $errStr
-         * @param $errFile
-         * @param $errLine
+         * @param $errNo string
+         * @param $errStr int
+         * @param $errFile string
+         * @param $errLine int
          */
         public static function sendStandardPhpError($errNo, $errStr, $errFile, $errLine) {
             $cleanedTrace = TraceGenerator::getTrace();
             $level = OpbeatClient::getErrorLevel($errNo);
-            OpbeatClient::internalSendError($errStr, $level, $cleanedTrace);
+            OpbeatClient::sendError(
+                $errStr,
+                $level,
+                $errFile,
+                $errLine,
+                $cleanedTrace
+            );
         }
 
         /**
-         * @param $errStr
-         * @param $level
-         * @param $cleanedTrace
+         * @param $errStr string
+         * @param $level string
+         * @param $cleanedTrace array
+         * @param null|string $errFile
+         * @param null|int $errLine
          */
-        public static function sendPrettyError($errStr, $level, $cleanedTrace) {
-            OpbeatClient::internalSendError($errStr, $level, $cleanedTrace);
+        public static function sendPrettyError($errStr, $level, $cleanedTrace, $errFile=null, $errLine=null) {
+            OpbeatClient::sendError($errStr, $level, $errFile, $errLine, $cleanedTrace);
         }
 
         /**
-         * @param $e
-         *
-         * @throws Exception @TODO not implemented yet
+         * @param $e \Exception
          */
         public static function sendException($e) {
-            //@TODO
-            $level = OpbeatClient::getErrorLevel($e->getCode());    //@fixme getCode will return different codes
-            OpbeatClient::internalSendError($e->getMessage, $level, TraceGenerator::getTraceByException($e));
+            OpbeatClient::sendError(
+                $e->getMessage(),
+                'error',
+                $e->getFile(),
+                $e->getLine(),
+                TraceGenerator::getTraceByException($e)
+            );
         }
 
     }

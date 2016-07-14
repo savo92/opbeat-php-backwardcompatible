@@ -36,7 +36,7 @@ an "autoloader file").
 3. Invoke OpbeatInitializer::load with the first parameter as FALSE (boolean) - it will check dependencies and settings
 4. Use the interfaces provided by the initializer:
     * sendStandardPhpError which receives the same params provided by set\_error\_handler
-    * sendPrettyError which receives an error msg, an error level (fatal, error, debug, notice) and a cleaned trace (please see the 
+    * sendPrettyError which receives an error msg, an error level (fatal, error, warning, info, debug) and a cleaned trace (please see the 
     Opbeat Public API documentation)
     * sendException which receives an \\Exception object
 
@@ -50,5 +50,5 @@ This client is provided to you with the MIT license, so you can use it as you pr
 
 **REALLY IMPORTANT: THIS CLIENT DOESN'T USE COMPOSER NOR NAMESPACES. 
 IF YOU WANT A BETTER VERSION WITH NAMESPACES OR OTHER INTERESTING THINGS, PLEASE CONSIDER TO FORK IT.
-MAYBE, IN THE FUTURE, OPBEAT WILL RELEASE A OFFICIAL CLIENT - SO THIS PROJECT WILL BECOME USELESS (SURE, IF THEY'LL SUPPORT PHP \<= 5.5). 
+MAYBE, IN THE FUTURE, OPBEAT WILL RELEASE AN OFFICIAL CLIENT - SO THIS PROJECT WILL BECOME USELESS (SURE, IF THEY'LL SUPPORT PHP \<= 5.5). 
 THIS IS ANOTHER REASON THAT STOPS ME TO IMPROVE THIS PROJECT.**

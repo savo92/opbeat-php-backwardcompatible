@@ -39,13 +39,20 @@
          *
          * @param $errStr string a message
          * @param $level string the error level, conform to Opbeat standard
+         * @param $errFile string
+         * @param $errLine int
          * @param $cleanedTrace array the stack trace, conform to Opbeat standard
          */
-        private static function _sendError($errStr, $level, $cleanedTrace) {
+        public static function sendError($errStr, $level, $errFile, $errLine, $cleanedTrace) {
             // @TODO add other facoltative infos
             $data_string = json_encode(array(
                 'message' => $errStr,
                 'level' => $level,
+                'culprit' => $errFile,
+                'timestamp' => time(),
+                'machine' => array(
+                    'hostname' => $_SERVER['']
+                ),
                 'stacktrace' => array(
                     'frames' => $cleanedTrace
                 )
@@ -60,7 +67,7 @@
                     "Authorization: Bearer ".OPBEAT_SECRET_TOKEN,
                     "Content-Type: application/json",
                     "Content-Length: " . strlen($data_string),
-                    "User-Agent: PHP custom script 1.0"
+                    "User-Agent: opbeat-php-backwardcompatible/1.0"
                 )
             ));
             // @fixme curl error handling is wrong
@@ -79,17 +86,6 @@
         private static function getAPIUrl () {
             return "https://intake.opbeat.com/api/v1/organizations/".OPBEAT_ORGANIZATION_ID
                    ."/apps/".OPBEAT_APP_ID."/errors/";
-        }
-
-        /**
-         * @TODO remove and use _sendError directly???
-         *
-         * @param $errStr
-         * @param $level
-         * @param $cleanedTrace
-         */
-        public static function internalSendError($errStr, $level, $cleanedTrace) {
-            self::_sendError($errStr, $level, $cleanedTrace);
         }
 
     }

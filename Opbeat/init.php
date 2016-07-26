@@ -11,18 +11,26 @@
 
         private static $initialized = false;
         private static $hookCallback = null;
+        private static $extra = null;
 
         /**
          * @param bool|TRUE $willRegisterHooks define if registers set_error_handler and register_shutdown_function or not
          * @param null|callable $hookCallback the callable that will be executed at the end of the hook (if $willRegisterHooks is true)
+         * @param null|array|callable $extra
          */
-        public static function load ($willRegisterHooks=true, $hookCallback=null) {
+        public static function load ($willRegisterHooks=true, $hookCallback=null, $extra=null) {
             if (self::$initialized===true) return;
 
             OpbeatUtils::checkSystem();
+
             if ($willRegisterHooks===true) {
                 self::registerHooks($hookCallback);
             }
+
+            if ($extra!==null) {
+                self::$extra = $extra;
+            }
+
             self::$initialized = true;
         }
 
@@ -82,21 +90,19 @@
          * @param $errStr int
          * @param $errFile string
          * @param $errLine int
-         * @param null|array|false $http
-         * @param null|array $user
          */
-        public static function sendStandardPhpError ($errNo, $errStr, $errFile, $errLine, $http=null, $user=null) {
+        public static function sendStandardPhpError ($errNo, $errStr, $errFile, $errLine) {
             self::load(true);
-            $cleanedTrace = OpbeatTraceGenerator::getTrace();
-            $level = OpbeatClient::getErrorLevel($errNo);
+
             OpbeatClient::sendError(
                 $errStr,
-                $level,
+                OpbeatClient::getErrorLevel($errNo),
                 $errFile,
                 $errLine,
-                $cleanedTrace,
-                $http,
-                $user
+                OpbeatTraceGenerator::getTrace(),
+                null,
+                null,
+                self::getExtra()
             );
         }
 
@@ -108,9 +114,12 @@
          * @param null|int $errLine
          * @param null|array|false $http
          * @param null|array $user
+         * @param null|array $extra
          */
-        public static function sendPrettyError ($errStr, $level, $cleanedTrace, $errFile=null, $errLine=null, $http=null, $user=null) {
+        public static function sendPrettyError ($errStr, $level, $cleanedTrace, $errFile=null, $errLine=null,
+                $http=null, $user=null, $extra=null) {
             self::load(true);
+
             OpbeatClient::sendError($errStr, $level, $errFile, $errLine, $cleanedTrace, $http, $user);
         }
 
@@ -118,9 +127,17 @@
          * @param $e \Exception
          * @param null|array|false $http
          * @param null|array $user
+         * @param null|array|false $extra
          */
-        public static function sendException ($e, $http=null, $user=null) {
+        public static function sendException ($e, $http=null, $user=null, $extra=null) {
             self::load(true);
+
+            if ($extra===null) {
+                $extra = self::getExtra();
+            } else if ($extra===false) {
+                $extra = null;
+            }
+
             OpbeatClient::sendError(
                 $e->getMessage(),
                 'error',
@@ -128,8 +145,30 @@
                 $e->getLine(),
                 OpbeatTraceGenerator::getTraceByException($e),
                 $http,
-                $user
+                $user,
+                $extra
             );
+        }
+
+        /**
+         * @return array|null
+         */
+        private static function getExtra () {
+            if (is_array(self::$extra) && count(self::$extra)>0) {
+                $extraArray = self::$extra;
+            } elseif (is_callable(self::$extra)) {
+                try {
+                    $extraArray = call_user_func(self::$extra);
+                    if ($extraArray===false || !is_array($extraArray) || count($extraArray)==0) {
+                        throw new Exception();
+                    }
+                } catch(Exception $e) {
+                    $extraArray = null;
+                }
+            } else {
+                $extraArray = null;
+            }
+            return $extraArray;
         }
 
     }

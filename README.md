@@ -37,6 +37,8 @@ There are some advanced stuff you can use:
     * sendStandardPhpError which receives the same params provided by set\_error\_handler
     * sendPrettyError which receives an error msg, an error level (fatal, error, warning, info, debug), a cleaned trace and an array of info for the http interface (please see the Opbeat Public API documentation)
     * sendException which receives an \\Exception object
+  
+  
 *Please, note that if you use sendStandardPhpError or sendException, the client will automatically generates the trace for you.*
     
 ### Pass a callable
@@ -53,5 +55,5 @@ If you pass FALSE as first parameter to Opbeat::init(), you need to declare your
 The client provide methods which can be use as logger in your application. Please see the Wiki for more info.
 
 ## DISCLAIMER
-As written above, I initially developed this client for my purposes only. After the development I decided to publish this client to help other developers that don't use PHP \>= 5.6. I hope you enjoy my work and contribute.
+As written above, I initially developed this client for my purposes only. After the development I decided to publish this client to help other developers that don't use PHP \>= 5.6 in legacy applications. I hope you enjoy my work and contribute.
 This client is provided to you with the MIT license, so you can use it as you prefer.

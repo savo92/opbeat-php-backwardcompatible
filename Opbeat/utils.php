@@ -2,16 +2,28 @@
 
     /**
      * Class SystemControl
-     * Check plugin dependencies and configuration
-     * throws ErrorException if some dependencies or configuration are wrong
+     * Provide generic functions
      */
-    class SystemControl {
+    class OpbeatUtils {
+
+        /**
+         * @param string $file
+         *
+         * @return string
+         */
+        public static function getFilename ($file) {
+            if (defined('OPBEATOPT_PROJECT_ABS_PATH')!==FALSE) {
+                return str_replace(OPBEATOPT_PROJECT_ABS_PATH, '', $file);
+            } else {
+                return $file;
+            }
+        }
 
         /**
          * Handle the system checkup
          * @throws ErrorException if missing dependencies or configurations
          */
-        public static function check() {
+        public static function checkSystem() {
             self::checkDependencies();
             self::checkConstant();
         }
@@ -21,13 +33,13 @@
          * @throws ErrorException
          */
         private static function checkConstant() {
-            if (defined(OPBEAT_ORGANIZATION_ID)===FALSE) {
+            if (defined(OPBEATOPT_ORGANIZATION_ID)===FALSE) {
                 throw new ErrorException('Missing configuration: Organization ID (OPBEAT_ORGANIZATION_ID)');
             }
-            if (defined(OPBEAT_APP_ID)===FALSE) {
+            if (defined(OPBEATOPT_APP_ID)===FALSE) {
                 throw new ErrorException('Missing configuration: App ID (OPBEAT_APP_ID)');
             }
-            if (defined(OPBEAT_SECRET_TOKEN)===FALSE) {
+            if (defined(OPBEATOPT_SECRET_TOKEN)===FALSE) {
                 throw new ErrorException('Missing configuration: Secret Token (OPBEAT_SECRET_TOKEN)');
             }
         }

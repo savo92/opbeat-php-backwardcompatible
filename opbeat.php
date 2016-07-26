@@ -7,4 +7,6 @@
      * @version: 1.0
      */
 
-    require_once dirname(__FILE__) . '/Opbeat/init.php';
+    define ('OPBEAT_CLIENT_ABS_PATH', dirname(__FILE__));
+
+    require_once OPBEAT_CLIENT_ABS_PATH . '/Opbeat/init.php';

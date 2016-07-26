@@ -16,10 +16,10 @@
          * @param bool|TRUE $willRegisterHooks define if registers set_error_handler and register_shutdown_function or not
          * @param null|callable $hookCallback the callable that will be executed at the end of the hook (if $willRegisterHooks is true)
          */
-        public static function load($willRegisterHooks=true, $hookCallback=null) {
+        public static function load ($willRegisterHooks=true, $hookCallback=null) {
             if (self::$initialized===true) return;
 
-            SystemControl::check();
+            OpbeatUtils::checkSystem();
             if ($willRegisterHooks===true) {
                 self::registerHooks($hookCallback);
             }
@@ -46,7 +46,7 @@
          * @param $errFile string
          * @param $errLine int
          */
-        public static function errorHandler($errNo, $errStr, $errFile, $errLine) {
+        public static function errorHandler ($errNo, $errStr, $errFile, $errLine) {
             $php_not_logged_error_codes = array(
                 E_NOTICE,
                 E_USER_NOTICE,
@@ -64,7 +64,7 @@
         /**
          * The standard register_shutdown_function callable
          */
-        public static function shutdownHandler() {
+        public static function shutdownHandler () {
             $error = error_get_last();
             if ($error!==null) {
                 // Invoke self::errorHandler and pass the properly value from $error
@@ -82,17 +82,21 @@
          * @param $errStr int
          * @param $errFile string
          * @param $errLine int
+         * @param null|array|false $http
+         * @param null|array $user
          */
-        public static function sendStandardPhpError($errNo, $errStr, $errFile, $errLine) {
+        public static function sendStandardPhpError ($errNo, $errStr, $errFile, $errLine, $http=null, $user=null) {
             self::load(true);
-            $cleanedTrace = TraceGenerator::getTrace();
+            $cleanedTrace = OpbeatTraceGenerator::getTrace();
             $level = OpbeatClient::getErrorLevel($errNo);
             OpbeatClient::sendError(
                 $errStr,
                 $level,
                 $errFile,
                 $errLine,
-                $cleanedTrace
+                $cleanedTrace,
+                $http,
+                $user
             );
         }
 
@@ -102,23 +106,29 @@
          * @param $cleanedTrace array
          * @param null|string $errFile
          * @param null|int $errLine
+         * @param null|array|false $http
+         * @param null|array $user
          */
-        public static function sendPrettyError($errStr, $level, $cleanedTrace, $errFile=null, $errLine=null) {
+        public static function sendPrettyError ($errStr, $level, $cleanedTrace, $errFile=null, $errLine=null, $http=null, $user=null) {
             self::load(true);
-            OpbeatClient::sendError($errStr, $level, $errFile, $errLine, $cleanedTrace);
+            OpbeatClient::sendError($errStr, $level, $errFile, $errLine, $cleanedTrace, $http, $user);
         }
 
         /**
          * @param $e \Exception
+         * @param null|array|false $http
+         * @param null|array $user
          */
-        public static function sendException($e) {
+        public static function sendException ($e, $http=null, $user=null) {
             self::load(true);
             OpbeatClient::sendError(
                 $e->getMessage(),
                 'error',
                 $e->getFile(),
                 $e->getLine(),
-                TraceGenerator::getTraceByException($e)
+                OpbeatTraceGenerator::getTraceByException($e),
+                $http,
+                $user
             );
         }
 

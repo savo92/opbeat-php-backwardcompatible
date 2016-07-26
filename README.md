@@ -16,9 +16,10 @@ This client requires only cURL (curl for PHP)
 ## Installation
 1. Clone this repository wherever you prefer (it doesn't use Composer nor namespace)
 2. Define constants for Opbeat settings (Organization ID, App ID, Secret Token):  
-    * *OPBEATOPT_ORGANIZATION_ID*  
-    * *OPBEATOPT_APP_ID*  
-    * *OPBEATOPT_SECRET_TOKEN*  
+    * *OPBEATOPT\_ORGANIZATION\_ID*  
+    * *OPBEATOPT\_APP\_ID*  
+    * *OPBEATOPT\_SECRET\_TOKEN*  
+    * OPBEATOPT\_PROJECT\_ABS\_PATH (optional, used to reduce the file name from absolute – like in traces or errFile vars)
 3. Include opbeat.php and you have done
   
 *This is the simple version, which automatically use set\_error\_handler and register\_shutdown\_function. In this mode (or, if you manually initialize the client – see below) the client will automatically catch any uncaught error*  
@@ -45,9 +46,11 @@ There are some advanced stuff you can use:
 4. Execute OpbeatInitializer::load with the first parameter as TRUE (boolean). Obviously, if you pass FALSE as first parameter, the callable is useless because you need to declare your own set\_error\_handler and register\_shutdown\_function 
 5. Provide a callable as second parameter
 
-## Declare custom set\_error\_handler and register\_shutdown\_function
+### Declare custom set\_error\_handler and register\_shutdown\_function
 If you pass FALSE as first parameter to Opbeat::init(), you need to declare your own set\_error\_handler and register\_shutdown\_function and manually send the error to the Opbeat client. This is an advanced stuff, if you are doing it only to do other actions before, please consider to run OpbeatInitializer::errorHandler() or OpbeatInitializer::shutdownHandler().
 
+## Methods
+The client provide methods which can be use as logger in your application. Please see the Wiki for more info.
 
 ## DISCLAIMER
 As written above, I initially developed this client for my purposes only. After the development I decided to publish this client to help other developers that don't use PHP \>= 5.6. I hope you enjoy my work and contribute.

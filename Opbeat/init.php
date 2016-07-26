@@ -9,6 +9,7 @@
      */
     class OpbeatInitializer {
 
+        private static $initialized = false;
         private static $hookCallback = null;
 
         /**
@@ -16,10 +17,13 @@
          * @param null|callable $hookCallback the callable that will be executed at the end of the hook (if $willRegisterHooks is true)
          */
         public static function load($willRegisterHooks=true, $hookCallback=null) {
+            if (self::$initialized===true) return;
+
             SystemControl::check();
             if ($willRegisterHooks===true) {
                 self::registerHooks($hookCallback);
             }
+            self::$initialized = true;
         }
 
         /**
@@ -80,6 +84,7 @@
          * @param $errLine int
          */
         public static function sendStandardPhpError($errNo, $errStr, $errFile, $errLine) {
+            self::load(true);
             $cleanedTrace = TraceGenerator::getTrace();
             $level = OpbeatClient::getErrorLevel($errNo);
             OpbeatClient::sendError(
@@ -99,6 +104,7 @@
          * @param null|int $errLine
          */
         public static function sendPrettyError($errStr, $level, $cleanedTrace, $errFile=null, $errLine=null) {
+            self::load(true);
             OpbeatClient::sendError($errStr, $level, $errFile, $errLine, $cleanedTrace);
         }
 
@@ -106,6 +112,7 @@
          * @param $e \Exception
          */
         public static function sendException($e) {
+            self::load(true);
             OpbeatClient::sendError(
                 $e->getMessage(),
                 'error',

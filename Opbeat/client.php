@@ -23,8 +23,6 @@
                     break;
                 case E_ERROR:
                 case E_USER_ERROR:
-                    $level = 'error';
-                    break;
                 case E_PARSE:
                 case E_CORE_ERROR:
                 case E_COMPILE_ERROR:
@@ -43,16 +41,13 @@
          * @param $errLine int
          * @param $cleanedTrace array the stack trace, conform to Opbeat standard
          */
-        public static function sendError($errStr, $level, $errFile, $errLine, $cleanedTrace) {
+        public static function sendError($errStr, $level, $errFile, $errLine, $cleanedTrace, $httpRequest=null) {
             // @TODO add other facoltative infos
             $data_string = json_encode(array(
                 'message' => $errStr,
                 'level' => $level,
                 'culprit' => $errFile,
                 'timestamp' => time(),
-                'machine' => array(
-                    'hostname' => $_SERVER['']
-                ),
                 'stacktrace' => array(
                     'frames' => $cleanedTrace
                 )

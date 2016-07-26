@@ -21,26 +21,32 @@ This client requires only cURL (libcurl for PHP)
     * *OPBEAT_SECRET_TOKEN*  
 3. Include opbeat.php and you have done
   
-*This is the simple version, which automatically use set\_error\_handler and register\_shutdown\_function*  
+*This is the simple version, which automatically use set\_error\_handler and register\_shutdown\_function. In this mode (or, if you manually initialize the client – see below) the client will automatically catch any uncaught error*  
   
 There are some advanced stuff you can use:
 * You can disable the hooks' automatic setup.
 * You can pass to the hook a callable that will be executed at the end of the procedure.
 
 ### Disable the hooks' automatic setup
-If you want to declare custom set\_error\_handler or register\_shutdown\_function, you must not include the opbeat.php (basically, it's 
-an "autoloader file").  
-
-1. After the clone, define the constants as above
-2. Include Opbeat/init.php
-3. Invoke OpbeatInitializer::load with the first parameter as FALSE (boolean) - it will check dependencies and settings
-4. Use the interfaces provided by the initializer:
+1. Clone the repository 
+2. Define the constants as above
+3. Include opbeat.php
+4. Execute OpbeatInitializer::load with the first parameter as FALSE (boolean) - so it will only check dependencies and settings
+5. Use the interfaces provided by the initializer:
     * sendStandardPhpError which receives the same params provided by set\_error\_handler
-    * sendPrettyError which receives an error msg, an error level (fatal, error, warning, info, debug) and a cleaned trace (please see the 
-    Opbeat Public API documentation)
+    * sendPrettyError which receives an error msg, an error level (fatal, error, warning, info, debug), a cleaned trace and an array of info for the http interface (please see the Opbeat Public API documentation)
     * sendException which receives an \\Exception object
-
 *Please, note that if you use sendStandardPhpError or sendException, the client will automatically generates the trace for you.*
+    
+### Pass a callable
+1. Clone the repository 
+2. Define the constants as above
+3. Include opbeat.php
+4. Execute OpbeatInitializer::load with the first parameter as TRUE (boolean). Obviously, if you pass FALSE as first parameter, the callable is useless because you need to declare your own set\_error\_handler and register\_shutdown\_function 
+5. Provide a callable as second parameter
+
+## Declare custom set\_error\_handler and register\_shutdown\_function
+If you pass FALSE as first parameter to Opbeat::init(), you need to declare your own set\_error\_handler and register\_shutdown\_function and manually send the error to the Opbeat client. This is an advanced stuff, if you are doing it only to do other actions before, please consider to run OpbeatInitializer::errorHandler() or OpbeatInitializer::shutdownHandler().
 
 
 ## DISCLAIMER
@@ -49,6 +55,6 @@ other developers that don't use PHP \>= 5.6. I hope you enjoy my work and contri
 This client is provided to you with the MIT license, so you can use it as you prefer.
 
 **REALLY IMPORTANT: THIS CLIENT DOESN'T USE COMPOSER NOR NAMESPACES. 
-IF YOU WANT A BETTER VERSION WITH NAMESPACES OR OTHER INTERESTING THINGS, PLEASE CONSIDER TO FORK IT.
+IF YOU WANT A VERSION WITH NAMESPACES OR OTHER THINGS, PLEASE CONSIDER TO FORK IT.
 MAYBE, IN THE FUTURE, OPBEAT WILL RELEASE AN OFFICIAL CLIENT - SO THIS PROJECT WILL BECOME USELESS (SURE, IF THEY'LL SUPPORT PHP \<= 5.5). 
 THIS IS ANOTHER REASON THAT STOPS ME TO IMPROVE THIS PROJECT.**

@@ -8,4 +8,3 @@
      */
 
     require_once dirname(__FILE__) . '/Opbeat/init.php';
-    OpbeatInitializer::load(true);

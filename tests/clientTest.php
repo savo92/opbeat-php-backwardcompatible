@@ -1,10 +1,8 @@
 <?php
-
-    use PHPUnit\Framework\TestCase;
-
+    require_once 'PHPUnit/Autoload.php';
     require_once dirname(dirname(__FILE__)).'/Opbeat/client.php';
 
-    class ClientTest extends TestCase {
+    class ClientTest extends PHPUnit_Framework_TestCase {
 
         public function testGetErrorLevel() {
             $this->assertEquals(Opbeat_Client::getErrorLevel(E_WARNING), 'warning');

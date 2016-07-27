@@ -1,7 +1,6 @@
 <?php
+    require_once 'PHPUnit/Autoload.php';
 
-    use PHPUnit\Framework\TestCase;
-
-    class InitTest extends TestCase {
+    class InitTest extends PHPUnit_Framework_TestCase {
 
     }

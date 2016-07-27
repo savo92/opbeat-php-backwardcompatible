@@ -1,7 +1,7 @@
 <?php
 
-    use PHPUnit\Framework\TestCase;
+    require_once 'PHPUnit/Autoload.php';
 
-    class TraceTest extends TestCase {
+    class TraceTest extends PHPUnit_Framework_TestCase {
 
     }

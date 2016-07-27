@@ -3,7 +3,7 @@ Opbeat-php-backwardcompatible
 
 [![Build Status](https://travis-ci.org/savo92/opbeat-php-backwardcompatible.svg?branch=master)](https://travis-ci.org/savo92/opbeat-php-backwardcompatible)  
   
-**Version: v0.2-alpha0**  
+**Version: v1.0-alpha1**  
 This project is in alpha stage. You can use basic functions, at your own risk.  
 See below for the next tasks.  
   

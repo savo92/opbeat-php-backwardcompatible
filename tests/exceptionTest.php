@@ -1,7 +1,7 @@
 <?php
-    /**
-     * Created by PhpStorm.
-     * User: lorenzo
-     * Date: 27/07/16
-     * Time: 18:28
-     */
+
+    use PHPUnit\Framework\TestCase;
+
+    class ExceptionTest extends TestCase {
+
+    }

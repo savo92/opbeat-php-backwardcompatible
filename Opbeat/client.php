@@ -70,8 +70,10 @@
                 case E_PARSE:
                 case E_CORE_ERROR:
                 case E_COMPILE_ERROR:
-                default:
                     $level = 'fatal';
+                    break;
+                default:
+                    $level = 'notice';
             }
             return $level;
         }

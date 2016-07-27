@@ -11,9 +11,6 @@
             $this->assertEquals(Opbeat_Utils::getFilename('/path/to/script/asdasd'), 'asdasd');
         }
 
-        /**
-         * @expectedException Exception
-         */
         public function testCheckConstantFailure () {
             try {
                 Opbeat_Utils::checkSystem();

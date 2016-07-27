@@ -15,7 +15,13 @@
          * @expectedException Exception
          */
         public function testCheckConstantFailure () {
-            Opbeat_Utils::checkSystem();
+            try {
+                Opbeat_Utils::checkSystem();
+                $this->assertTrue(false, '\\Exception not raised by Opbeat_Utils::checkSystem when configuration constant are undefined');
+            } catch (Exception $e) {
+                $this->assertTrue(true);
+            }
+
         }
 
         /**

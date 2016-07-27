@@ -26,6 +26,7 @@
         public static function checkSystem() {
             self::checkDependencies();
             self::checkConstant();
+            return true;
         }
 
         /**

@@ -2,7 +2,7 @@
 
     use PHPUnit\Framework\TestCase;
 
-    require_once '../Opbeat/client.php';
+    require_once realpath(dirname(__FILE__).'/../Opbeat/client.php');
 
     class ClientTest extends TestCase {
 

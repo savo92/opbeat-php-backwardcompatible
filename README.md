@@ -1,8 +1,9 @@
 Opbeat-php-backwardcompatible
 =================
 
-## !!!!!!!!!!!!! WIP !!!!!!!!!!!!! 
-## Still in development, please don't use  
+**Version: v0.2-alpha0**
+This project is in alpha stage. You can use basic functions, at your own risk.  
+See below for the next tasks
 
 [![Build Status](https://travis-ci.org/savo92/opbeat-php-backwardcompatible.svg?branch=master)](https://travis-ci.org/savo92/opbeat-php-backwardcompatible)  
   
@@ -35,6 +36,11 @@ A little list:
 * You can declare your own set\_error\_handler, set\_exception\_handler and register\_shutdown\_function.
 * You can use some utility functions to be more conform to the Opbeat API.
   
+## @TODO
+1. Create Wiki
+2. Improve stacktrace
+3. Write more tests
+4. ?? Support PHP5.2 ??
 
 ## DISCLAIMER
 As written above, I initially developed this client for my purposes only. After the development I decided to publish this client to help other developers that don't use PHP \>= 5.6 in legacy applications. I hope you enjoy my work and contribute.

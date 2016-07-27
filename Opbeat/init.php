@@ -26,10 +26,7 @@
             if ($willRegisterHooks===true) {
                 self::registerHooks($hookCallback);
             }
-
-            if ($extra!==null) {
-                self::$extra = $extra;
-            }
+            self::setExtra($extra);
 
             self::$initialized = true;
         }
@@ -180,6 +177,15 @@
                 $extraArray = null;
             }
             return $extraArray;
+        }
+
+        /**
+         * @param $extra null|array|callable
+         */
+        public function setExtra ($extra) {
+            if ($extra!==null) {
+                self::$extra = $extra;
+            }
         }
 
     }

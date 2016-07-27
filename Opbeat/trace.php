@@ -13,7 +13,7 @@
          * Use the php function debug_backtrace
          * @return array
          */
-        public static function getTrace() {
+        public static function getTrace () {
             $trace = debug_backtrace();
             $cleanedTrace = array();
             foreach ($trace as $frame) {

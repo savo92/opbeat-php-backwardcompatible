@@ -12,7 +12,7 @@
          * @return string
          */
         public static function getFilename ($file) {
-            if (defined('OPBEATOPT_PROJECT_ABS_PATH')!==FALSE) {
+            if (defined('OPBEATOPT_PROJECT_ABS_PATH')!==false) {
                 return str_replace(OPBEATOPT_PROJECT_ABS_PATH, '', $file);
             } else {
                 return $file;
@@ -33,14 +33,14 @@
          * @throws ErrorException
          */
         private static function checkConstant() {
-            if (defined(OPBEATOPT_ORGANIZATION_ID)===FALSE) {
-                throw new ErrorException('Missing configuration: Organization ID (OPBEAT_ORGANIZATION_ID)');
+            if (defined('OPBEATOPT_ORGANIZATION_ID')===false) {
+                throw new ErrorException('Missing configuration: Organization ID (OPBEATOPT_ORGANIZATION_ID)');
             }
-            if (defined(OPBEATOPT_APP_ID)===FALSE) {
-                throw new ErrorException('Missing configuration: App ID (OPBEAT_APP_ID)');
+            if (defined('OPBEATOPT_APP_ID')===false) {
+                throw new ErrorException('Missing configuration: App ID (OPBEATOPT_APP_ID)');
             }
-            if (defined(OPBEATOPT_SECRET_TOKEN)===FALSE) {
-                throw new ErrorException('Missing configuration: Secret Token (OPBEAT_SECRET_TOKEN)');
+            if (defined('OPBEATOPT_SECRET_TOKEN')===false) {
+                throw new ErrorException('Missing configuration: Secret Token (OPBEATOPT_SECRET_TOKEN)');
             }
         }
 

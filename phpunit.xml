@@ -1,2 +1,14 @@
-<phpunit colors="true">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true"
+         processIsolation="true">
+    <testsuites>
+        <testsuite name="clientTest">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./Opbeat</directory>
+        </whitelist>
+    </filter>
 </phpunit>

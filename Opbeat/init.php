@@ -53,7 +53,7 @@
          * @param $errLine int
          * @param null|array $trace
          */
-        public static function errorHandler ($errNo, $errStr, $errFile, $errLine, $trace=null) {
+        public static function errorHandler ($errNo, $errStr, $errFile, $errLine, $errContext=null, $trace=null, $hideDefaultPage=false) {
             $php_not_logged_error_codes = array(
                 E_NOTICE,
                 E_USER_NOTICE,
@@ -68,12 +68,15 @@
             if (self::$hookCallback!==null) {
                 call_user_func(self::$hookCallback);
             }
+            if ($hideDefaultPage===false) {
+                self::displayDefaultErrorPage();
+            }
         }
 
         /**
          * The standard register_shutdown_function callable
          */
-        public static function shutdownHandler () {
+        public static function shutdownHandler ($hideDefaultPage=false) {
             $error = error_get_last();
             if ($error!==null) {
                 // Invoke self::errorHandler and pass the properly value from $error
@@ -82,13 +85,18 @@
                     $error['message'],
                     $error['file'],
                     $error['line'],
-                    debug_backtrace()
+                    null,
+                    debug_backtrace(),
+                    $hideDefaultPage
                 );
             }
         }
 
-        public static function exceptionHandler ($e) {
+        public static function exceptionHandler ($e, $hideDefaultPage=false) {
             self::sendException($e);
+            if ($hideDefaultPage===false) {
+                self::displayDefaultErrorPage();
+            }
         }
 
         /**
@@ -186,6 +194,11 @@
             if ($extra!==null) {
                 self::$extra = $extra;
             }
+        }
+
+        private static function displayDefaultErrorPage () {
+            header('HTTP Status 500', true, 500);
+            die('Error 500: Internal Server Error');
         }
 
     }

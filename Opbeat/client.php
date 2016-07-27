@@ -44,10 +44,10 @@
             ));
             $result = curl_exec($ch);
 
+            // @TODO Opbeat should return 202
             if (curl_error($ch)) {
                 $error = curl_error($ch);
-            } else {
-                $error = "Unexpected error";
+                //  @TODO improve error handling
             }
             curl_close($ch);
         }

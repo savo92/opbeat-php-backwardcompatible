@@ -23,7 +23,7 @@ This client requires only cURL (curl for PHP)
     * **OPBEATOPT\_APP\_ID**.
     * **OPBEATOPT\_SECRET\_TOKEN**.
     * OPBEATOPT\_PROJECT\_ABS\_PATH (optional, used to transform the file name from absolute to a version that Opbeat can use to present the its advanced stack trace - if you have already set the Git integration on Opbeat).
-3. Include opbeat.php and you have done
+3. Include opbeat.php, call Opbeat_Initializer::load and you have done
   
 *This is the simple version, which automatically use set\_error\_handler, set\_exception\_handler and register\_shutdown\_function. In this mode, the client will automatically catch any uncaught error*  
 

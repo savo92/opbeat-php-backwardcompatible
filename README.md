@@ -15,10 +15,10 @@ This client requires only cURL (curl for PHP)
 ## Installation
 1. Clone this repository wherever you prefer (it doesn't use Composer nor namespace)
 2. Define constants for Opbeat settings (Organization ID, App ID, Secret Token):  
-    * **OPBEATOPT\_ORGANIZATION\_ID**  
-    * **OPBEATOPT\_APP\_ID**
-    * **OPBEATOPT\_SECRET\_TOKEN**  
-    * OPBEATOPT\_PROJECT\_ABS\_PATH (optional, used to reduce the file name from absolute – like in traces or errFile vars)
+    * **OPBEATOPT\_ORGANIZATION\_ID**.  
+    * **OPBEATOPT\_APP\_ID**.
+    * **OPBEATOPT\_SECRET\_TOKEN**.
+    * OPBEATOPT\_PROJECT\_ABS\_PATH (optional, used to transform the file name from absolute to a version that Opbeat can use to present the its advanced stack trace - if you have already set the Git integration on Opbeat).
 3. Include opbeat.php and you have done
   
 *This is the simple version, which automatically use set\_error\_handler and register\_shutdown\_function. In this mode, the client will automatically catch any uncaught error*  

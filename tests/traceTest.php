@@ -12,7 +12,7 @@
                 'file' => 'file',
                 'line' => 123,
                 'function' => 'func',
-                'vars' => array()
+                'args' => array()
             ));
             $destinationTrace = array(array(
                 'abs_path' => 'file',
@@ -27,7 +27,7 @@
                 'file' => 'file',
                 'line' => 123,
                 'function' => 'func',
-                'vars' => array(
+                'args' => array(
                     'asd' => 'asdddd',
                     'pippo' => 'pippo'
                 )
@@ -37,7 +37,7 @@
                 'filename' => 'file',
                 'lineno' => 123,
                 'function' => 'func',
-                'args' => (object) array(
+                'vars' => (object) array(
                     'asd' => 'asdddd',
                     'pippo' => 'pippo'
                 )

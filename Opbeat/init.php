@@ -43,6 +43,7 @@
             }
 
             set_error_handler(array('OpbeatInitializer', 'errorHandler'));
+            set_exception_handler(array('OpbeatInitializer', 'exceptionHandler'));
             register_shutdown_function(array('OpbeatInitializer', 'shutdownHandler'));
         }
 
@@ -53,8 +54,9 @@
          * @param $errStr int
          * @param $errFile string
          * @param $errLine int
+         * @param null|array $trace
          */
-        public static function errorHandler ($errNo, $errStr, $errFile, $errLine) {
+        public static function errorHandler ($errNo, $errStr, $errFile, $errLine, $trace=null) {
             $php_not_logged_error_codes = array(
                 E_NOTICE,
                 E_USER_NOTICE,
@@ -63,7 +65,9 @@
                 E_USER_DEPRECATED
             );
             if (in_array($errNo, $php_not_logged_error_codes)) return;
-            self::sendStandardPhpError($errNo, $errStr, $errFile, $errLine);
+
+            if ($trace===null) $trace = debug_backtrace();
+            self::sendStandardPhpError($errNo, $errStr, $errFile, $errLine, $trace);
             if (self::$hookCallback!==null) {
                 call_user_func(self::$hookCallback);
             }
@@ -80,9 +84,14 @@
                     $error['type'],
                     $error['message'],
                     $error['file'],
-                    $error['line']
+                    $error['line'],
+                    debug_backtrace()
                 );
             }
+        }
+
+        public static function exceptionHandler ($e) {
+            self::sendException($e);
         }
 
         /**
@@ -90,8 +99,9 @@
          * @param $errStr int
          * @param $errFile string
          * @param $errLine int
+         * @param array $trace
          */
-        public static function sendStandardPhpError ($errNo, $errStr, $errFile, $errLine) {
+        public static function sendStandardPhpError ($errNo, $errStr, $errFile, $errLine, $trace) {
             self::load(true);
 
             OpbeatClient::sendError(
@@ -99,7 +109,7 @@
                 OpbeatClient::getErrorLevel($errNo),
                 $errFile,
                 $errLine,
-                OpbeatTraceGenerator::getTrace(),
+                OpbeatTraceGenerator::getTrace($trace),
                 null,
                 null,
                 self::getExtra()

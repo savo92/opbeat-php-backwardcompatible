@@ -27,7 +27,7 @@
             $frame = array(
                 'url' => self::getFullURL(),
                 'method' => $_SERVER['REQUEST_METHOD'],
-                'secure' => isset($_SERVER['HTTPS']),
+                'secure' => isset($_SERVER['HTTPS']) ? true : false,
                 'user_agent' => $_SERVER['HTTP_USER_AGENT'],
                 'http_host' => $_SERVER['HTTP_HOST']
             );
@@ -53,8 +53,10 @@
          * @return string Return the actual full URL: schema://host/uri without querystring
          */
         public static function getFullURL () {
+            $requestUri = $_SERVER['REQUEST_URI'];
+            if (stripos($requestUri, '/')===0) $requestUri = substr($requestUri, 1);
             return 'http'.(isset($_SERVER['HTTPS']) ? 's' : '') . '://'
-                   . "{$_SERVER['HTTP_HOST']}/{$_SERVER['REQUEST_URI']}";
+                   . "{$_SERVER['HTTP_HOST']}/{$requestUri}";
         }
 
         /**

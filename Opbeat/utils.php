@@ -13,7 +13,7 @@
          */
         public static function getFilename ($file) {
             if (defined('OPBEATOPT_PROJECT_ABS_PATH')!==false) {
-                return str_replace(OPBEATOPT_PROJECT_ABS_PATH, '', $file);
+                return str_replace(OPBEATOPT_PROJECT_ABS_PATH.'/', '', $file);
             } else {
                 return $file;
             }

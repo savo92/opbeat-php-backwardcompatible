@@ -21,7 +21,7 @@ This client requires only cURL (curl for PHP)
     * OPBEATOPT\_PROJECT\_ABS\_PATH (optional, used to transform the file name from absolute to a version that Opbeat can use to present the its advanced stack trace - if you have already set the Git integration on Opbeat).
 3. Include opbeat.php and you have done
   
-*This is the simple version, which automatically use set\_error\_handler and register\_shutdown\_function. In this mode, the client will automatically catch any uncaught error*  
+*This is the simple version, which automatically use set\_error\_handler, set\_exception\_handler and register\_shutdown\_function. In this mode, the client will automatically catch any uncaught error*  
 
 ## What you can do
 _There are some advanced stuff you can directly use. Please consider that you MUST follow the [Opbeat API documentation](https://opbeat.com/docs/api/intake/v1/#-error-logging-). In the wiki you can find a complete documentation of what this client can do and how to use it._  
@@ -30,7 +30,7 @@ A little list:
 * You can pass to the hook a callable that will be executed at the end of the procedure.
 * You can pass a callable or an array to the loader to generate the 'user' node of the array that will be sent to Opbeat.
 * You can send an Exception, so you can use the client as logger to your custom error handling.
-* You can declare your own set\_error\_handler and register\_shutdown\_function.
+* You can declare your own set\_error\_handler, set\_exception\_handler and register\_shutdown\_function.
 * You can use some utility functions to be more conform to the Opbeat API.
   
 

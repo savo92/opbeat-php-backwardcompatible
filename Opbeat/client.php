@@ -7,6 +7,7 @@
      */
 
     require_once dirname(__FILE__).'/http.php';
+    require_once dirname(__FILE__).'/exception.php';
 
     class OpbeatClient {
 
@@ -23,10 +24,10 @@
          * @param null|array $extra
          */
         public static function sendError($errStr, $level, $errFile, $errLine, $cleanedTrace,
-                $httpRequest=null, $user=null, $extra=null) {
+                $httpRequest=null, $user=null, $extra=null, $exception=null) {
 
 
-            $data = self::prepareData($errStr, $level, $errFile, $errLine, $cleanedTrace, $httpRequest, $user, $extra);
+            $data = self::prepareData($errStr, $level, $errFile, $errLine, $cleanedTrace, $httpRequest, $user, $extra, $exception);
             $dataString = json_encode($data);
             $ch = curl_init();
             curl_setopt_array($ch, array(
@@ -88,13 +89,13 @@
          * @return array
          */
         private static function prepareData($errStr, $level, $errFile, $errLine, $cleanedTrace,
-                $httpRequest=null, $user=null, $extra=null) {
+                $httpRequest=null, $user=null, $extra=null, $exception=null) {
 
             // Add default parameters
             $data = array(
                 'message' => $errStr,
                 'level' => $level,
-                'culprit' => $errFile,
+                'culprit' => $errFile.":".$errLine,
                 'timestamp' => time(),
                 'stacktrace' => array(
                     'frames' => $cleanedTrace
@@ -116,6 +117,11 @@
 
             if ($extra!==null && is_array($extra) && count($extra)>0) {
                 $data['extra'] = $extra;
+            }
+
+            $exception = OpbeatException::getException($exception);
+            if ($exception!==null) {
+                $data['exception'] = $exception;
             }
 
             return $data;

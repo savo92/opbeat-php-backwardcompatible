@@ -156,7 +156,8 @@
                 OpbeatTraceGenerator::getTraceByException($e),
                 $http,
                 $user,
-                $extra
+                $extra,
+                $e
             );
         }
 

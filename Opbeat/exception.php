@@ -6,7 +6,7 @@
      * Time: 18:23
      */
 
-    class OpbeatException {
+    class Opbeat_Exception {
 
         /**
          * @param \Exception $exception

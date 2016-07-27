@@ -7,7 +7,7 @@
      * Return a trace that could be sent to Opbeat
      * @TODO complete implementation to be more conformed to Opbeat API
      */
-    class OpbeatTraceGenerator {
+    class Opbeat_TraceGenerator {
 
         /**
          * Use the php function debug_backtrace
@@ -19,7 +19,7 @@
                 if ($frame['line']===null) continue; //@TODO improve control
                 array_push($cleanedTrace, array(
                     'abs_path' => $frame['file'],
-                    'filename' => OpbeatUtils::getFilename($frame['file']),
+                    'filename' => Opbeat_Utils::getFilename($frame['file']),
                     'lineno' => $frame['line'],
                     'function' => $frame['function']
                 ));
@@ -36,7 +36,7 @@
             foreach ($e->getTrace () as $frame) {
                 array_push($cleanedTrace, array(
                     'abs_path' => $frame['file'],
-                    'filename' => OpbeatUtils::getFilename($frame['file']),
+                    'filename' => Opbeat_Utils::getFilename($frame['file']),
                     'lineno' => $frame['line'],
                     'function' => $frame['function']
                 ));

@@ -4,7 +4,7 @@
      * Class SystemControl
      * Provide generic functions
      */
-    class OpbeatUtils {
+    class Opbeat_Utils {
 
         /**
          * @param string $file

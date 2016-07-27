@@ -9,7 +9,7 @@
     require_once dirname(__FILE__).'/http.php';
     require_once dirname(__FILE__).'/exception.php';
 
-    class OpbeatClient {
+    class Opbeat_Client {
 
         /**
          * Using cURL, it send error to Opbeat API
@@ -104,7 +104,7 @@
 
             if ($httpRequest!==false) {
                 if ($httpRequest===null) {
-                    $httpRequest = OpbeatHttp::generateHttp();
+                    $httpRequest = Opbeat_Http::generateHttp();
                 }
                 if (is_array($httpRequest) && count($httpRequest)>0) {
                     $data['http'] = $httpRequest;
@@ -119,7 +119,7 @@
                 $data['extra'] = $extra;
             }
 
-            $exception = OpbeatException::getException($exception);
+            $exception = Opbeat_Exception::getException($exception);
             if ($exception!==null) {
                 $data['exception'] = $exception;
             }

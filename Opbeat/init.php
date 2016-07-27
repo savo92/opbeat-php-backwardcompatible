@@ -7,7 +7,7 @@
      * Class OpbeatInitializer
      * Check dependencies and configuration. Then registers the error handler and register shutdown hooks
      */
-    class OpbeatInitializer {
+    class Opbeat_Initializer {
 
         private static $initialized = false;
         private static $hookCallback = null;
@@ -21,7 +21,7 @@
         public static function load ($willRegisterHooks=true, $hookCallback=null, $extra=null) {
             if (self::$initialized===true) return;
 
-            OpbeatUtils::checkSystem();
+            Opbeat_Utils::checkSystem();
 
             if ($willRegisterHooks===true) {
                 self::registerHooks($hookCallback);
@@ -42,9 +42,9 @@
                 self::$hookCallback = $hookCallback;
             }
 
-            set_error_handler(array('OpbeatInitializer', 'errorHandler'));
-            set_exception_handler(array('OpbeatInitializer', 'exceptionHandler'));
-            register_shutdown_function(array('OpbeatInitializer', 'shutdownHandler'));
+            set_error_handler(array('Opbeat_Initializer', 'errorHandler'));
+            set_exception_handler(array('Opbeat_Initializer', 'exceptionHandler'));
+            register_shutdown_function(array('Opbeat_Initializer', 'shutdownHandler'));
         }
 
         /**
@@ -104,12 +104,12 @@
         public static function sendStandardPhpError ($errNo, $errStr, $errFile, $errLine, $trace) {
             self::load(true);
 
-            OpbeatClient::sendError(
+            Opbeat_Client::sendError(
                 $errStr,
-                OpbeatClient::getErrorLevel($errNo),
+                Opbeat_Client::getErrorLevel($errNo),
                 $errFile,
                 $errLine,
-                OpbeatTraceGenerator::getTrace($trace),
+                Opbeat_TraceGenerator::getTrace($trace),
                 null,
                 null,
                 self::getExtra()
@@ -130,7 +130,7 @@
                 $http=null, $user=null, $extra=null) {
             self::load(true);
 
-            OpbeatClient::sendError($errStr, $level, $errFile, $errLine, $cleanedTrace, $http, $user);
+            Opbeat_Client::sendError($errStr, $level, $errFile, $errLine, $cleanedTrace, $http, $user);
         }
 
         /**
@@ -148,12 +148,12 @@
                 $extra = null;
             }
 
-            OpbeatClient::sendError(
+            Opbeat_Client::sendError(
                 $e->getMessage(),
                 'error',
                 $e->getFile(),
                 $e->getLine(),
-                OpbeatTraceGenerator::getTraceByException($e),
+                Opbeat_TraceGenerator::getTraceByException($e),
                 $http,
                 $user,
                 $extra,

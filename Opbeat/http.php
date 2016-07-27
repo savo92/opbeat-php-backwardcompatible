@@ -6,7 +6,7 @@
      * Time: 20:37
      */
 
-    class OpbeatHttp {
+    class Opbeat_Http {
 
         /**
          * Generate an http node for the json payload. It returns null if no HTTP request

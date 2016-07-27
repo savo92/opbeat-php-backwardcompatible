@@ -2,9 +2,11 @@ Opbeat-php-backwardcompatible
 =================
 
 ## !!!!!!!!!!!!! WIP !!!!!!!!!!!!! 
-## Still in development, please don't use 
+## Still in development, please don't use  
 
-> Simple PHP Client for Opbeat. It provides a simple integration that works with any PHP5 versions
+[![Build Status](https://travis-ci.org/savo92/opbeat-php-backwardcompatible.svg?branch=master)](https://travis-ci.org/savo92/opbeat-php-backwardcompatible)  
+  
+> Simple PHP Client for Opbeat. It provides a simple integration that works with PHP >= 5.3
 
 _Really thanks to [Mads Jensen](https://github.com/madsleejensen) for his [Opbeat-php](https://github.com/madsleejensen/opbeat-php). It inspires me to develop a more compatible version of the client for my needs._  
   

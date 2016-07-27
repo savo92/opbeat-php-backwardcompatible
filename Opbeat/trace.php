@@ -16,13 +16,18 @@
         public static function getTrace ($trace) {
             $cleanedTrace = array();
             foreach ($trace as $frame) {
-                if ($frame['line']===null) continue; //@TODO improve control
-                array_push($cleanedTrace, array(
+                if ($frame['line']===null || !isset($frame['file'])) continue;
+                $frameArray = array(
                     'abs_path' => $frame['file'],
                     'filename' => Opbeat_Utils::getFilename($frame['file']),
                     'lineno' => $frame['line'],
                     'function' => $frame['function']
-                ));
+                );
+                if (isset($frame['args']) && !empty($frame['args'])) {
+                    $frameArray['vars'] = (object)$frame['args'];
+                }
+                array_push($cleanedTrace, $frameArray);
+
             }
             return $cleanedTrace;
         }
@@ -34,12 +39,17 @@
         public static function getTraceByException ($e) {
             $cleanedTrace = array();
             foreach ($e->getTrace () as $frame) {
-                array_push($cleanedTrace, array(
+                if ($frame['line']===null || !isset($frame['file'])) continue;
+                $frameArray = array(
                     'abs_path' => $frame['file'],
                     'filename' => Opbeat_Utils::getFilename($frame['file']),
                     'lineno' => $frame['line'],
                     'function' => $frame['function']
-                ));
+                );
+                if (!empty($frame['args'])) {
+                    $frameArray['vars'] = (object)$frame['args'];
+                }
+                array_push($cleanedTrace, $frameArray);
             }
             return $cleanedTrace;
         }

@@ -1,5 +1,4 @@
 <?php
-    require_once 'PHPUnit/Autoload.php';
     require_once dirname(dirname(__FILE__)).'/Opbeat/client.php';
 
     class ClientTest extends PHPUnit_Framework_TestCase {

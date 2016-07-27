@@ -13,7 +13,7 @@
          * @return array|null
          */
         public static function generateHttp () {
-            if ($_SERVER['REQUEST_METHOD']) {
+            if (isset($_SERVER['REQUEST_METHOD'])) {
                 return self::_generateHttpFrame();
             } else {
                 return null;

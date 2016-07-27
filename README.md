@@ -8,7 +8,7 @@ This project is in alpha stage. You can use basic functions, at your own risk.
 See below for the next tasks.  
   
   
-> Simple PHP Client for Opbeat. It provides a simple integration that works with PHP \>= 5.3
+> Simple PHP Client for Opbeat. It provides a simple integration that works with PHP \>= 5.2
 
 _Really thanks to [Mads Jensen](https://github.com/madsleejensen) for his [Opbeat-php](https://github.com/madsleejensen/opbeat-php). It inspires me to develop a more compatible version of the client for my needs._  
   
@@ -41,7 +41,6 @@ A little list:
 1. Create Wiki
 2. Improve stacktrace
 3. Write more tests
-4. ?? Support PHP5.2 ??
 
 ## DISCLAIMER
 As written above, I initially developed this client for my purposes only. After the development I decided to publish this client to help other developers that don't use PHP \>= 5.6 in legacy applications. I hope you enjoy my work and contribute.

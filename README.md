@@ -1,5 +1,5 @@
 Opbeat-php-backwardcompatible
-=================
+=============================
 
 [![Build Status](https://travis-ci.org/savo92/opbeat-php-backwardcompatible.svg?branch=master)](https://travis-ci.org/savo92/opbeat-php-backwardcompatible)  
   
@@ -37,7 +37,7 @@ A little list:
 * You can declare your own set\_error\_handler, set\_exception\_handler and register\_shutdown\_function.
 * You can use some utility functions to be more conform to the Opbeat API.
   
-## @TODO
+## @TODO  
 1. Create Wiki
 2. Improve stacktrace
 3. Write more tests

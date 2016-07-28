@@ -73,7 +73,8 @@
             if ($error) {
                 throw new Exception($error);
             }
-            if ($info['http_code']!=202) {
+            $result = json_decode($result, true);
+            if (!$result || !isset($result['status'])|| $result['status']!=202) {
                 throw new Exception($result);
             }
         }

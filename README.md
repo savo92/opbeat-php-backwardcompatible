@@ -28,7 +28,7 @@ This client requires only cURL (curl for PHP)
 *This is the simple version, which automatically use set\_error\_handler, set\_exception\_handler and register\_shutdown\_function. In this mode, the client will automatically catch any uncaught error*  
 
 ## What you can do
-_There are some advanced stuff you can directly use. Please consider that you MUST follow the [Opbeat API documentation](https://opbeat.com/docs/api/intake/v1/#-error-logging-). In the [wiki of this repository you](https://github.com/savo92/opbeat-php-backwardcompatible/wiki) can find a complete documentation of what this client can do and how to use it._  
+_There are some advanced stuff you can directly use. Please consider that you MUST follow the [Opbeat API documentation](https://opbeat.com/docs/api/intake/v1/#-error-logging-) when you build data structure for the advanced functions. In the [wiki of this repository](https://github.com/savo92/opbeat-php-backwardcompatible/wiki) you can find a complete documentation of what this client can do and how to use it._  
   
 A little list:
 * You can pass to the hook a callable that will be executed at the end of the procedure.

@@ -22,12 +22,34 @@
          * @param null|array|false $httpRequest
          * @param null|array $user
          * @param null|array $extra
+         * @param null|array $exception
+         *
+         * @throws Exception
          */
-        public static function sendError($errStr, $level, $errFile, $errLine, $cleanedTrace,
-                $httpRequest=null, $user=null, $extra=null, $exception=null) {
+        public static function sendError(
+            $errStr,
+            $level,
+            $errFile,
+            $errLine,
+            $cleanedTrace,
+            $httpRequest=null,
+            $user=null,
+            $extra=null,
+            $exception=null
+        ) {
 
 
-            $data = self::prepareData($errStr, $level, $errFile, $errLine, $cleanedTrace, $httpRequest, $user, $extra, $exception);
+            $data = self::prepareData(
+                $errStr,
+                $level,
+                $errFile,
+                $errLine,
+                $cleanedTrace,
+                $httpRequest,
+                $user,
+                $extra,
+                $exception
+            );
             $dataString = json_encode($data);
             $ch = curl_init();
             curl_setopt_array($ch, array(
@@ -43,13 +65,17 @@
                 )
             ));
             $result = curl_exec($ch);
-
-            // @TODO Opbeat should return 202
-            if (curl_error($ch)) {
-                $error = curl_error($ch);
-                //  @TODO improve error handling
-            }
+            $info = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $error = curl_error($ch);
+            $errNo = curl_errno($ch);
             curl_close($ch);
+
+            if ($error) {
+                throw new Exception($error);
+            }
+            if ($info['http_code']!=202) {
+                throw new Exception($result);
+            }
         }
 
         /**
@@ -87,11 +113,20 @@
          * @param null|array|false $httpRequest
          * @param null|array $user
          * @param null|array $extra
+         * @param null|array $exception
          *
          * @return array
          */
-        private static function prepareData($errStr, $level, $errFile, $errLine, $cleanedTrace,
-                $httpRequest=null, $user=null, $extra=null, $exception=null) {
+        private static function prepareData($errStr,
+            $level,
+            $errFile,
+            $errLine,
+            $cleanedTrace,
+            $httpRequest=null,
+            $user=null,
+            $extra=null,
+            $exception=null
+        ) {
 
             // Add default parameters
             $data = array(

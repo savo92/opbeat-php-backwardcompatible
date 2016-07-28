@@ -65,14 +65,18 @@
                 )
             ));
             $result = curl_exec($ch);
-            $info = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $error = curl_error($ch);
-            $errNo = curl_errno($ch);
             curl_close($ch);
 
             if ($error) {
                 throw new Exception($error);
             }
+
+            if ($httpCode!=202) {
+                throw new Exception("Opbeat returns HTTP ".$httpCode);
+            }
+
             $result = json_decode($result, true);
             if (!$result || !isset($result['status'])|| $result['status']!=202) {
                 throw new Exception($result);

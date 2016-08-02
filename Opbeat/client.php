@@ -22,7 +22,7 @@
          * @param null|array|false $httpRequest
          * @param null|array $user
          * @param null|array $extra
-         * @param null|array $exception
+         * @param null|Exception $exception
          *
          * @throws Exception
          */
@@ -73,13 +73,13 @@
                 throw new Exception($error);
             }
 
-            if ($httpCode!=202) {
+            if ($httpCode!=202 && !$result) {
                 throw new Exception("Opbeat returns HTTP ".$httpCode);
             }
 
             $result = json_decode($result, true);
             if (!$result || !isset($result['status'])|| $result['status']!=202) {
-                throw new Exception($result);
+                throw new Exception(json_encode($result));
             }
         }
 
@@ -118,7 +118,7 @@
          * @param null|array|false $httpRequest
          * @param null|array $user
          * @param null|array $extra
-         * @param null|array $exception
+         * @param null|Exception $exception
          *
          * @return array
          */

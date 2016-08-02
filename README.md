@@ -5,7 +5,7 @@ Opbeat-php-backwardcompatible
   
 **Version: v1.0-alpha1**  
 This project is in alpha stage. You can use basic functions, at your own risk.  
-See below for the next tasks.  
+See below for next tasks.  
   
   
 > Simple PHP Client for Opbeat. It provides a simple integration that works with PHP \>= 5.2
@@ -22,13 +22,13 @@ This client requires only cURL (curl for PHP)
     * **OPBEATOPT\_ORGANIZATION\_ID**.  
     * **OPBEATOPT\_APP\_ID**.
     * **OPBEATOPT\_SECRET\_TOKEN**.
-    * OPBEATOPT\_PROJECT\_ABS\_PATH (optional, used to transform the file name from absolute to a version that Opbeat can use to present the its advanced stack trace - if you have already set the Git integration on Opbeat).
+    * OPBEATOPT\_PROJECT\_ABS\_PATH (optional, used to transform the file name from absolute to a version that Opbeat can use to present  its advanced stack trace - if you have already set the Git integration on Opbeat).
 3. Include opbeat.php, call Opbeat_Initializer::load and you have done
   
 *This is the simple version, which automatically use set\_error\_handler, set\_exception\_handler and register\_shutdown\_function. In this mode, the client will automatically catch any uncaught error*  
 
 ## What you can do
-_There are some advanced stuff you can directly use. Please consider that you MUST follow the [Opbeat API documentation](https://opbeat.com/docs/api/intake/v1/#-error-logging-) when you build data structure for the advanced functions. In the [wiki of this repository](https://github.com/savo92/opbeat-php-backwardcompatible/wiki) you can find a complete documentation of what this client can do and how to use it._  
+_There are some advanced stuff you can directly use. Please consider that you MUST follow the [Opbeat API documentation](https://opbeat.com/docs/api/intake/v1/#-error-logging-) when you build data structure for advanced functions. In the [wiki of this repository](https://github.com/savo92/opbeat-php-backwardcompatible/wiki) you can find a complete documentation of what this client can do and how to use it._  
   
 A little list:
 * You can pass to the hook a callable that will be executed at the end of the procedure.
